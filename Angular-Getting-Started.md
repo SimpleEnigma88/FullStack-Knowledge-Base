@@ -7,11 +7,12 @@
 #
 #
 ### Academind Angular Course
+
+[Course Structure](#structure)
 ___
 ##### Getting Started
 
 - Node.js is a prerequisite
-- 
 
 ###### Process for seting up an Angular project folder.
 ---
@@ -27,3 +28,37 @@ Start server on CLI
 Server will run the SPA app in the browers at address:
 `http://localhost:4200/`
 The server will auto update any changes you make to the app, just like VSC Go Live ext.
+
+##### Editing the Frist App
+This was just a demostration of how the features of Angular can enact live changes to the browser window. Not too sure what you're looking at, but still a good demo.
+
+##### The Course Structure
+1. The Basics
+2. Components and Databinding
+3. Directives
+4. Services & Dependency Injection
+5. Routing
+6. Observables
+7. Forms
+8. Pipes
+9. Http
+10. Authentication
+11. Optimizations & NgModules
+12. Deployment
+13. Animations and Testing
+14. Real Project
+
+
+
+
+# 
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
