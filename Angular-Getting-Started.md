@@ -25,7 +25,7 @@ Change directory to project folder `cd app-name/`
 
 Start server on CLI
 `ng serve`
-Server will run the SPA app in the browers at address:
+Server will run the app in the browers at address:
 `http://localhost:4200/`
 The server will auto update any changes you make to the app, just like VSC Go Live ext.
 
@@ -48,17 +48,12 @@ This was just a demostration of how the features of Angular can enact live chang
 13. Animations and Testing
 14. Real Project
 
-
-
-
-# 
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
+ ##### Basic Project adjustments
+ Added Boostrap styles by adding the following code to the `"node_modules/bootstrap/dist/css/bootstrap.min.css",` to the styles section in the angular.json file in the project.
+ ```
+ "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "src/styles.css"
+            ]
+```
+Also, delete the contents of the `export class AppComponent {}` function in the `/src/app/app.component.ts` file.
