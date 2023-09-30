@@ -142,4 +142,14 @@ element
 ']
 )}
 
+
+
+//app.component.html
+<div>
+  <h3>Title<h3>
+  <hr>
+  <-- <app-servers><app-servers> -->
+  <div appservers></div>
+</div>
+
 ```
