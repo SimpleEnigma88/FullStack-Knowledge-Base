@@ -124,3 +124,22 @@ export class AppComponent {
 
 
 
+#### Component Selectors
+
+Selectors can be 'element', [attribute], or
+
+element
+
+```
+@Component({
+  selector: '[app-servers]',                 // <-------- 'app-servers'  changed to  '[app-servers]'
+  templateUrl: './app.component.html',
+  // styleUrls: ['/app.component.css']
+  styles: ['
+  h3 {
+    color:dodgerBlue;
+  }
+']
+)}
+
+```
