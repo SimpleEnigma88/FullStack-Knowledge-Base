@@ -93,7 +93,7 @@ Then, `servers.component.html` calls
 Whose content is `<p>The Server Component</p>`
 
 
-###Component Styles
+#### Component Styles
 Application styling can be added to the `app.component.ts` file:
 
 ```
