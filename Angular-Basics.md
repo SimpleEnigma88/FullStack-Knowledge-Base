@@ -128,7 +128,7 @@ export class AppComponent {
 
 Selectors can be 'element', [attribute], or
 
-element
+##### *Element*
 
 ```
 @Component({
