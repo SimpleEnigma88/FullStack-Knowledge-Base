@@ -6,13 +6,14 @@
 #
 #
 #
-### Academind Angular Course - Basics
+### Academind Angular Course - Basics 
 
 #### Angular Apps, Loading and Starting
 
 1. Angular injects several Javascript bundles into the HTML loading. 
 
 2. `main.ts` gets loaded first, in this file the following line tells angular to incorporate the app into the browser.
+
  `import { AppModule } from './app/app.module';`
 
 3. I think the app.component files under `/app/` give further instructions on loading components and inserting them into the `<app-root> </app-root>` html node.
@@ -45,7 +46,8 @@ export class ServerComponent {              // 1. same class structure so far
 #### AppModule and Component Declaration
 
 Do not add file types to end of imports, these are added by webpack when built. ex.
-`import { ServerComponent } from './server/server.component';`   the .ts is not needed
+
+`import { ServerComponent } from './server/server.component';`   //the .ts is not needed
 
 ```
 import { NgModule } from '@angular/core';
@@ -83,20 +85,24 @@ It will contain css, html and ts files.
 We can nest modules by calling one from the other. 
 
 `app.component.html` calls
+
 `<app-servers></app-servers>`
 
 Then, `servers.component.html` calls
 
 `<app-server></app-server>`   //Take note one is plural, the other, not.
+
 `<app-server></app-server>`
 
 Whose content is `<p>The Server Component</p>`
 
 
 #### Component Styles
+
 Application styling can be added to the `app.component.ts` file:
 
 ```
+
 import { Component } from '@angular/core';
 
 @Component({
@@ -111,6 +117,7 @@ import { Component } from '@angular/core';
 )}
 export class AppComponent {
 }
+
 ```
 
 ---------------------------------
