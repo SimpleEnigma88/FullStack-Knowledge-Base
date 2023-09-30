@@ -1,26 +1,42 @@
-# Knowledge Base 
+# Knowledge Base
 
-### [Codefi Codelabs](https://www.codefiworks.com/codelabs/ )
+### [Codefi Codelabs](https://www.codefiworks.com/codelabs/)
 
 ### [Pro Academind](https://pro.academind.com/)
+
 #
+
 #
+
 #
-### Academind Angular Course - Basics 
+
+### Academind Angular Course - Basics
+
+---
+
+---
 
 #### Angular Apps, Loading and Starting
 
-1. Angular injects several Javascript bundles into the HTML loading. 
+1. Angular injects several Javascript bundles into the HTML loading.
 
 2. `main.ts` gets loaded first, in this file the following line tells angular to incorporate the app into the browser.
 
- `import { AppModule } from './app/app.module';`
+`import { AppModule } from './app/app.module';`
 
 3. I think the app.component files under `/app/` give further instructions on loading components and inserting them into the `<app-root> </app-root>` html node.
+
+---
+
+---
 
 #### Components are Important
 
 Reusability! Being able to work on different parts without affecting the whole. Gives structure to complexity.
+
+---
+
+---
 
 #### Creating a New Component
 
@@ -42,12 +58,15 @@ export class ServerComponent {              // 1. same class structure so far
 }
 ```
 
+---
+
+---
 
 #### AppModule and Component Declaration
 
 Do not add file types to end of imports, these are added by webpack when built. ex.
 
-`import { ServerComponent } from './server/server.component';`   //the .ts is not needed
+`import { ServerComponent } from './server/server.component';` //the .ts is not needed
 
 ```
 import { NgModule } from '@angular/core';
@@ -67,13 +86,17 @@ import { ServerComponent } from './server/server.component';
     FormsModule,
     HttpClientModule
   ],
-  providers: [], 
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
 ```
+
 Angular is broken up into many modules, we have to import these modules or parts of them to get the functionality we need. Seems similar to import javascript libraries like lodash, or others.
 
+---
+
+---
 
 #### Custom Components/ Nesting
 
@@ -82,7 +105,7 @@ Angular is broken up into many modules, we have to import these modules or parts
 This will create a new folder under `/app/`
 It will contain css, html and ts files.
 
-We can nest modules by calling one from the other. 
+We can nest modules by calling one from the other.
 
 `app.component.html` calls
 
@@ -90,12 +113,15 @@ We can nest modules by calling one from the other.
 
 Then, `servers.component.html` calls
 
-`<app-server></app-server>`   //Take note one is plural, the other, not.
+`<app-server></app-server>` //Take note one is plural, the other, not.
 
 `<app-server></app-server>`
 
 Whose content is `<p>The Server Component</p>`
 
+---
+
+---
 
 #### Component Styles
 
@@ -120,9 +146,9 @@ export class AppComponent {
 
 ```
 
----------------------------------
+---
 
-
+---
 
 #### Component Selectors
 
@@ -130,7 +156,9 @@ Selectors can be 'element', [attribute] or '.class':
 
 **Note:** Using IDs or Psuedo selectors is not supported.
 
-##### *Element*
+---
+
+##### Element
 
 ```
 @Component({
@@ -155,7 +183,11 @@ Selectors can be 'element', [attribute] or '.class':
 
 ```
 
-##### *Attribute*
+---
+
+---
+
+##### Attribute
 
 ```
 @Component({
@@ -180,7 +212,8 @@ Selectors can be 'element', [attribute] or '.class':
 
 ```
 
-##### *Class*
+##### Class
+
 ```
 import { Component } from '@angular/core';
 
@@ -209,4 +242,36 @@ export class AppComponent {
 
 ```
 
+---
 
+---
+
+### Data-Binding
+
+_Output Direction_  
+**TS Code -> HTML#**
+
+- String Interpolation:
+  - {{ data }}
+
+`<p>{{'server'}} with ID {{ serverID }} is {{ serverStatus }}</p>`
+
+No 'block code' like functions, etc.
+
+- Property Binding:
+  - [property]="data"
+
+Use ex:  
+`<button class="btn-primary" [disabled]="">Add Server</button>`
+
+`<p>{{'server'}} with ID {{ serverID }} is {{ getServerStatus() }}</p>`
+
+**User Input -> TS Code**
+
+- Event Binding:
+  - (event)="expression"
+
+**"Two-Way-Binding"** -- (Combine Binding Types)
+
+- NgModel:
+  - {(ngModel)}="date"
