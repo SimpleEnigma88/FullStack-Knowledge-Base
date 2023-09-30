@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Knowledge Base</title>
+        <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+        
+    </head>
+    <body class="vscode-body vscode-light">
+        <h1 id="knowledge-base">Knowledge Base</h1>
+<h3 id="codefi-codelabs"><a href="https://www.codefiworks.com/codelabs/">Codefi Codelabs</a></h3>
+<h3 id="pro-academind"><a href="https://pro.academind.com/">Pro Academind</a></h3>
+<h1 id=""></h1>
+<h1 id="-1"></h1>
+<h1 id="-2"></h1>
+<h3 id="academind-angular-course---basics">Academind Angular Course - Basics</h3>
+<h4 id="angular-apps-loading-and-starting">Angular Apps, Loading and Starting</h4>
+<ol>
+<li>
+<p>Angular injects several Javascript bundles into the HTML loading.</p>
+</li>
+<li>
+<p><code>main.ts</code> gets loaded first, in this file the following line tells angular to incorporate the app into the browser.</p>
+</li>
+</ol>
+<p><code>import { AppModule } from './app/app.module';</code></p>
+<ol start="3">
+<li>I think the app.component files under <code>/app/</code> give further instructions on loading components and inserting them into the <code>&lt;app-root&gt; &lt;/app-root&gt;</code> html node.</li>
+</ol>
+<h4 id="components-are-important">Components are Important</h4>
+<p>Reusability! Being able to work on different parts without affecting the whole. Gives structure to complexity.</p>
+<h4 id="creating-a-new-component">Creating a New Component</h4>
+<p>folder names should be literal enough to give indication of it's purpose.
+Best practices for file names are usually constructed <code>app.component.ts</code> <code>app.component.html</code></p>
+<p>Basic TS component file</p>
+<pre><code>import { Component } from &quot;@angular/core&quot;;  // 3. We have to import what we need from the Angular packages installed.
+
+@Component({                                // 2. @Component to tell Angular what this is, selector and where to look
+  selector: 'app-server',                   // again, the format, app-nameOfComponent, is best practice.
+  templateUrl: './server.component.html'
+})
+
+export class ServerComponent {              // 1. same class structure so far
+
+}
+</code></pre>
+<h4 id="appmodule-and-component-declaration">AppModule and Component Declaration</h4>
+<p>Do not add file types to end of imports, these are added by webpack when built. ex.</p>
+<p><code>import { ServerComponent } from './server/server.component';</code>   //the .ts is not needed</p>
+<pre><code>import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
+import { AppComponent } from './app.component';
+import { FormsModule } from '@angular/forms';
+import { ServerComponent } from './server/server.component';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    ServerComponent
+  ],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    HttpClientModule
+  ],
+  providers: [], 
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+</code></pre>
+<p>Angular is broken up into many modules, we have to import these modules or parts of them to get the functionality we need. Seems similar to import javascript libraries like lodash, or others.</p>
+<h4 id="custom-components-nesting">Custom Components/ Nesting</h4>
+<p><code>ng generate component *filename*</code></p>
+<p>This will create a new folder under <code>/app/</code>
+It will contain css, html and ts files.</p>
+<p>We can nest modules by calling one from the other.</p>
+<p><code>app.component.html</code> calls</p>
+<p><code>&lt;app-servers&gt;&lt;/app-servers&gt;</code></p>
+<p>Then, <code>servers.component.html</code> calls</p>
+<p><code>&lt;app-server&gt;&lt;/app-server&gt;</code>   //Take note one is plural, the other, not.</p>
+<p><code>&lt;app-server&gt;&lt;/app-server&gt;</code></p>
+<p>Whose content is <code>&lt;p&gt;The Server Component&lt;/p&gt;</code></p>
+<h4 id="component-styles">Component Styles</h4>
+<p>Application styling can be added to the <code>app.component.ts</code> file:</p>
+<pre><code>
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  // styleUrls: ['/app.component.css']
+  styles: ['
+  h3 {
+    color:dodgerBlue;
+  }
+']
+)}
+export class AppComponent {
+}
+
+</code></pre>
+<hr>
+<h4 id="component-selectors">Component Selectors</h4>
+<p>Selectors can be 'element', [attribute], or</p>
+<h5 id="element"><em>Element</em></h5>
+<pre><code>@Component({
+  selector: '[app-servers]',                 // &lt;-------- 'app-servers'  changed to  '
+  templateUrl: './app.component.html',
+  // styleUrls: ['/app.component.css']
+  styles: ['
+  h3 {
+    color:dodgerBlue;
+  }
+']
+)}
+
+
+//app.component.html
+&lt;div&gt;
+  &lt;h3&gt;Title&lt;h3&gt;
+  &lt;hr&gt;
+  &lt;-- &lt;app-servers&gt;&lt;app-servers&gt; --&gt;
+  &lt;div appservers&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+</code></pre>
+<h5 id="attribute"><em>Attribute</em></h5>
+<pre><code>@Component({
+  selector: '[app-servers]',                 // &lt;-------- 'app-servers'  changed to  '
+  templateUrl: './app.component.html',
+  // styleUrls: ['/app.component.css']
+  styles: ['
+  h3 {
+    color:dodgerBlue;
+  }
+']
+)}
+
+
+//app.component.html
+&lt;div&gt;
+  &lt;h3&gt;Title&lt;h3&gt;
+  &lt;hr&gt;
+  &lt;-- &lt;app-servers&gt;&lt;app-servers&gt; --&gt;
+  &lt;div appservers&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+</code></pre>
+
+        
+        
+    </body>
+    </html>

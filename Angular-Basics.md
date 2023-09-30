@@ -126,13 +126,15 @@ export class AppComponent {
 
 #### Component Selectors
 
-Selectors can be 'element', [attribute], or
+Selectors can be 'element', [attribute] or '.class':
+
+**Note:** Using IDs or Psuedo selectors is not supported.
 
 ##### *Element*
 
 ```
 @Component({
-  selector: '[app-servers]',                 // <-------- 'app-servers'  changed to  '[app-servers]'
+  selector: '[app-servers]',                 // <-------- 'app-servers'  changed to  'app-server'
   templateUrl: './app.component.html',
   // styleUrls: ['/app.component.css']
   styles: ['
@@ -141,7 +143,6 @@ Selectors can be 'element', [attribute], or
   }
 ']
 )}
-
 
 
 //app.component.html
@@ -153,3 +154,59 @@ Selectors can be 'element', [attribute], or
 </div>
 
 ```
+
+##### *Attribute*
+
+```
+@Component({
+  selector: '[app-servers]',     //  'app-servers'  changed to  'app-server'
+  templateUrl: './app.component.html',
+  // styleUrls: ['/app.component.css']
+  styles: ['
+  h3 {
+    color:dodgerBlue;
+  }
+']
+)}
+
+
+//app.component.html
+<div>
+  <h3>Title<h3>
+  <hr>
+  <-- <app-servers><app-servers> -->
+  <div appservers></div>
+</div>
+
+```
+
+##### *Class*
+```
+import { Component } from '@angular/core';
+
+@Component({
+  selector: '.app-root',
+  templateUrl: './app.component.html',
+  // styleUrls: ['/app.component.css']
+  styles: ['
+  h3 {
+    color:dodgerBlue;
+  }
+']
+)}
+export class AppComponent {
+}
+
+
+//app.component.html
+<div>
+  <h3>Title<h3>
+  <hr>
+    <-- <app-servers><app-servers> -->
+    <-- <div appservers></div> -->
+    <div class ="appservers"></div>
+</div>
+
+```
+
+
