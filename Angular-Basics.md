@@ -248,8 +248,9 @@ export class AppComponent {
 
 ### Data-Binding
 
-_Output Direction_  
-**TS Code -> HTML#**
+_Output Direction_
+
+#### **TS Code -> HTML#**
 
 - String Interpolation:
   - {{ data }}
@@ -261,17 +262,30 @@ No 'block code' like functions, etc.
 - Property Binding:
   - [property]="data"
 
-Use ex:  
-`<button class="btn-primary" [disabled]="">Add Server</button>`
+Use example:  
+_in app.component.html_  
+`<button class="btn-primary" [disabled]="!allowNewServer">Add Server</button>`  
+Would be referencing:
+_server.component.ts_
 
-`<p>{{'server'}} with ID {{ serverID }} is {{ getServerStatus() }}</p>`
+```
+export class ServersComponents implements OnInit {
+    allowNewServer = false;
 
-**User Input -> TS Code**
+    constructor() {
+        setTimeout(() => {
+            this.allowNewServer = true;
+        }, 2000)
+    }
+}
+```
+
+#### **User Input -> TS Code**
 
 - Event Binding:
   - (event)="expression"
 
-**"Two-Way-Binding"** -- (Combine Binding Types)
+#### **"Two-Way-Binding"** -- (Combine Binding Types)
 
 - NgModel:
   - {(ngModel)}="date"
