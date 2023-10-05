@@ -21,7 +21,7 @@ properties cannot be accesses from outside their components, by default.
 @Input allows you to access these properties.
 
 ```
-@Input element: {
+@Input() element: {
     type: string, name: string, content: string
   };
 ```
@@ -57,6 +57,22 @@ Which will change how other components access the element
 </div>
 ```
 
-Do you have to use the Alias from within the element's home component?
-
 #### Custom Property and Event Binding Summary
+
+Dude, creating your own events and binding stuff to it is sliiiick.
+
+cockpit.component.ts
+
+```
+@Output('bpCreated') blueprintCreated = new EventEmitter<{ serverName: string, serverContent: string }>();
+```
+
+```
+onAddBlueprint() {
+    this.blueprintCreated.emit({ serverName: this.newServerName, serverContent: this.newServerContent });
+  }
+```
+
+### View Encapsulation
+
+Angular enforces behavior that is not native to the browser, limiting the influence of .css files to the component that they are grouped with.
