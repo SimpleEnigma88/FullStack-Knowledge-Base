@@ -76,3 +76,32 @@ onAddBlueprint() {
 ### View Encapsulation
 
 Angular enforces behavior that is not native to the browser, limiting the influence of .css files to the component that they are grouped with.
+
+You can change the encapsulation
+
+```
+@Component({
+  selector: 'app-server-element',
+  templateUrl: './server-element.component.html',
+  styleUrls: ['./server-element.component.css'],
+  encapsulation: ViewEncapsulation.Emulated //(Default is Emulated), None, and ShadowDom
+})
+```
+
+### Local Refs in Templates
+
+Local refs are good if you don't need two way binding and just need the value temporarily. Like passing it immediately to whatever needs it.
+
+```
+<input type="text" class="form-control" #serverNameInput>
+```
+`#serverNameInput` is the local ref
+
+**Important** This will hold a reference to the <b>Element</b> not the *value* of the element.
+Also, you can only use this in the template(.cs) of the component.
+
+
+### Getting Access to the Template and DOM with @ViewChild
+
+
+
