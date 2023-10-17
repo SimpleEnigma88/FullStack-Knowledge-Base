@@ -243,3 +243,73 @@ Setting an alias, if the alias is the same as the selector name you have to use 
           [defaultColor]="'red'"
           [appBetterHighlight]="'lightgreen'">Style me with a better Directive!</p>
 ```
+
+### What Happens behind the Scenes on Structural Directives
+
+The * lets angular know that this is a structural directive. The * is a syntactic sugar. It is a shortcut for the following code structure.
+
+```
+<ng-template [ngIf]="condition">
+  <p>Text</p>
+</ng-template>
+```
+
+ ### Building a Structural Directive
+
+ When you build your a custom directive, the imported name have to be the same at the selector.
+
+ ### Building and Using a Dropdown Directive    
+
+Custom directive to open and close a dropdown menu. Add the slector to the element you want to add the directive to, in this case the divs that wraps the dropdown menus in the header and recipes details component.
+
+
+ ```
+ import { Directive, HostBinding, HostListener } from '@angular/core';
+
+@Directive({
+  selector: '[appDropdown]'
+})
+
+export class DropdownDirective {
+  @HostBinding('class.open') isOpen = false;
+
+  @HostListener('click') toggleOpen() {
+    this.isOpen = !this.isOpen;
+  }
+
+
+  constructor() { }
+
+}
+```
+
+**recipe-detail.component.html**
+
+```
+<div class="btn-group" appDropdown>
+      <button
+          type="button"
+          class="btn btn-primary dropdown-toggle">
+        Manage Recipe <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <li><a href="#">Add Ingredients to Shopping List</a></li>
+        <li><a href="#">Edit Recipe</a></li>
+        <li><a href="#">Delete Recipe</a></li>
+      </ul>
+    </div>
+```
+
+**header.component.html**
+
+```
+<ul class="nav navbar-nav navbar-right">
+        <li class="dropdown" appDropdown>
+          <a href="#" class="dropdown-toggle" role="button">Manage <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Save Data</a></li>
+            <li><a href="#">Fetch Data</a></li>
+          </ul>
+        </li>
+      </ul>
+```
