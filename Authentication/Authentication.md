@@ -21,7 +21,8 @@ Servers will check the login/password to authenticate the user and sends back a 
 ## Adding Authentication
 
 add the component auth to the app.module.ts
-``` typescript
+
+```typescript
 import { AuthComponent } from './auth/auth.component';
 
 @ngModule({
@@ -42,33 +43,31 @@ import { AuthComponent } from './auth/auth.component';
 ```
 
 add the component auth to the app-routing.module.ts
-``` typescript
-import { AuthComponent } from './auth/auth.component';
 
-const routes: Routes = [
-  { path: 'auth', component: AuthComponent }
-];
+```typescript
+import { AuthComponent } from "./auth/auth.component";
 
+const routes: Routes = [{ path: "auth", component: AuthComponent }];
 ```
 
 ## Switching Between Auth Modes
+
 auth.component.ts
-``` typescript
-import { Component, OnInit } from '@angular/core';
+
+```typescript
+import { Component, OnInit } from "@angular/core";
 
 @Component({
-  selector: 'app-auth',
-  templateUrl: './auth.component.html',
-  styleUrls: ['./auth.component.css']
+  selector: "app-auth",
+  templateUrl: "./auth.component.html",
+  styleUrls: ["./auth.component.css"],
 })
-
 export class AuthComponent implements OnInit {
   isLoginMode = true;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   onSwitchMode() {
     this.isLoginMode = !this.isLoginMode;
@@ -77,7 +76,8 @@ export class AuthComponent implements OnInit {
 ```
 
 auth.service.ts
-``` typescript
+
+```typescript
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
@@ -114,55 +114,57 @@ export class AuthService {
 ```
 
 auth.component.ts
-``` typescript
-import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
 
-import { AuthService } from './auth.service';
+```typescript
+import { Component, OnInit } from "@angular/core";
+import { NgForm } from "@angular/forms";
+
+import { AuthService } from "./auth.service";
 
 @Component({
-  selector: 'app-auth',
-  templateUrl: './auth.component.html',
-  styleUrls: ['./auth.component.css']
+  selector: "app-auth",
+  templateUrl: "./auth.component.html",
+  styleUrls: ["./auth.component.css"],
 })
-
 export class AuthComponent implements OnInit {
   isLoginMode = true;
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   onSwitchMode() {
     this.isLoginMode = !this.isLoginMode;
   }
 
-    onSubmit(form: NgForm) {
-        if (!form.valid) {
-            return; // User should not be able to click the button if the form is not valid, but with dev tools it can be done, this is a second check for this.
-        }
-        const email = form.value.email;
-        const password = form.value.password;
+  onSubmit(form: NgForm) {
+    if (!form.valid) {
+      return; // User should not be able to click the button if the form is not valid, but with dev tools it can be done, this is a second check for this.
+    }
+    const email = form.value.email;
+    const password = form.value.password;
 
-        if (this.isLoginMode) {
-            // ...
-        } else {
-            this.authService.signup(email, password).subscribe(response => {
-                console.log(response);
-            }, error => {
-                console.log(error);
-            });
+    if (this.isLoginMode) {
+      // ...
+    } else {
+      this.authService.signup(email, password).subscribe(
+        (response) => {
+          console.log(response);
+        },
+        (error) => {
+          console.log(error);
         }
-                
-        form.reset();
+      );
     }
 
+    form.reset();
+  }
 }
 ```
 
 /shared/loading-spinner/loading-spinner.component.css
-``` css
+
+```css
 .lds-ellipsis {
   display: inline-block;
   position: relative;
@@ -221,7 +223,8 @@ export class AuthComponent implements OnInit {
 ```
 
 /shared/loading-spinner/loading-spinner.component.ts
-``` typescript
+
+```typescript
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -242,7 +245,7 @@ export class LoadingSpinnerComponent implements OnInit {
 
 Add the LoadingSpinnerComponent to the app.module.ts imports and declarations
 
-``` typescript
+```typescript
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 
 @NgModule({
@@ -263,245 +266,479 @@ import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinne
 ```
 
 auth.component.ts
-``` typescript
-import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
 
-import { AuthService } from './auth.service';
+```typescript
+import { Component, OnInit } from "@angular/core";
+import { NgForm } from "@angular/forms";
+
+import { AuthService } from "./auth.service";
 
 @Component({
-  selector: 'app-auth',
-  templateUrl: './auth.component.html',
-  styleUrls: ['./auth.component.css']
+  selector: "app-auth",
+  templateUrl: "./auth.component.html",
+  styleUrls: ["./auth.component.css"],
 })
-
 export class AuthComponent implements OnInit {
   isLoginMode = true;
   isLoading = false;
   error: string = null;
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   onSwitchMode() {
     this.isLoginMode = !this.isLoginMode;
   }
 
-    onSubmit(form: NgForm) {
-        if (!form.valid) {
-            return; 
-        }
-        const email = form.value.email;
-        const password = form.value.password;
+  onSubmit(form: NgForm) {
+    if (!form.valid) {
+      return;
+    }
+    const email = form.value.email;
+    const password = form.value.password;
 
-        this.isLoading = true;
-        if (this.isLoginMode) {
-            // ...
-        } else {
-            this.authService.signup(email, password).subscribe(response => {
-                console.log(response);
-                this.isLoading = false;
-            }, error => {
-                console.log(error);
-                this.error = 'An error occurred!';
-                this.isLoading = false;
-            });
+    this.isLoading = true;
+    if (this.isLoginMode) {
+      // ...
+    } else {
+      this.authService.signup(email, password).subscribe(
+        (response) => {
+          console.log(response);
+          this.isLoading = false;
+        },
+        (error) => {
+          console.log(error);
+          this.error = "An error occurred!";
+          this.isLoading = false;
         }
-                
-        form.reset();
+      );
     }
 
+    form.reset();
+  }
 }
 ```
 
 auth.component.html
-``` html
+
+```html
 //...
 <div class="alert alert-danger" *ngIf="error">
-    <p>{{ error }}</p>
+  <p>{{ error }}</p>
 </div>
 
 <div *ngIf="isLoading" sytle="text-align: center">
-    <app-loading-spinner></app-loading-spinner>
+  <app-loading-spinner></app-loading-spinner>
 </div>
-<form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)" *ngIf="!isLoading">
-
-//...
+<form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)" *ngIf="!isLoading">//...</form>
 ```
 
 ## Improving Error Handling
 
 auth.component.ts
-``` typescript
-import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
 
-import { AuthService } from './auth.service';
+```typescript
+import { Component, OnInit } from "@angular/core";
+import { NgForm } from "@angular/forms";
+
+import { AuthService } from "./auth.service";
 
 @Component({
-  selector: 'app-auth',
-  templateUrl: './auth.component.html',
-  styleUrls: ['./auth.component.css']
+  selector: "app-auth",
+  templateUrl: "./auth.component.html",
+  styleUrls: ["./auth.component.css"],
 })
-
 export class AuthComponent implements OnInit {
   isLoginMode = true;
   isLoading = false;
   error: string = null;
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   onSwitchMode() {
     this.isLoginMode = !this.isLoginMode;
   }
 
-    onSubmit(form: NgForm) {
-        if (!form.valid) {
-            return; 
-        }
-        const email = form.value.email;
-        const password = form.value.password;
+  onSubmit(form: NgForm) {
+    if (!form.valid) {
+      return;
+    }
+    const email = form.value.email;
+    const password = form.value.password;
 
-        this.isLoading = true;
-        if (this.isLoginMode) {
-            // ...
-        } else {
-            this.authService.signup(email, password).subscribe(response => {
-                console.log(response);
-                this.isLoading = false;
-            }, errorRes => {
-                console.log(errorRes);
-                switch (errorRes.error.error.message) {
-                    case 'EMAIL_EXISTS':
-                        this.error = 'This email exists already'; // This is not ideal, should be in the service using rsjx wrap operators
-                }
-                this.error = 'An error occurred!';
-                this.isLoading = false;
-            });
+    this.isLoading = true;
+    if (this.isLoginMode) {
+      // ...
+    } else {
+      this.authService.signup(email, password).subscribe(
+        (response) => {
+          console.log(response);
+          this.isLoading = false;
+        },
+        (errorRes) => {
+          console.log(errorRes);
+          switch (errorRes.error.error.message) {
+            case "EMAIL_EXISTS":
+              this.error = "This email exists already"; // This is not ideal, should be in the service using rsjx wrap operators
+          }
+          this.error = "An error occurred!";
+          this.isLoading = false;
         }
-                
-        form.reset();
+      );
     }
 
+    form.reset();
+  }
 }
 ```
 
 auth.service.ts
-``` typescript
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError } from 'rxjs/operators';
-import { throwError } from 'rxjs';
+
+```typescript
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { catchError } from "rxjs/operators";
+import { throwError } from "rxjs";
 
 interface AuthResponseData {
-    kind: string;
-    idToken: string;
-    email: string;
-    refreshToken: string;
-    expiresIn: string;
-    localId: string;
+  kind: string;
+  idToken: string;
+  email: string;
+  refreshToken: string;
+  expiresIn: string;
+  localId: string;
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
-
 export class AuthService {
+  constructor(private http: HttpClient) {}
 
-    constructor(private http: HttpClient) { }
-
-    signup(email: string, password: string) {
-        // replace [API_KEY] (including the []) with authenticatoin key from the Firebase DB Authentication
-        return this.http.post<AuthResponseData>(
-            'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=[API_KEY]', {
-            email: email,
-            password: password,
-            returnSecureToken: true
-        }).pipe(catchError(errorRes => {
-            let errorMessage = 'An unknown error occurred!';
-            if (!errorRes.error || !errorRes.error.error) {
-                return throwError(errorMessage);
-            }
-            switch (errorRes.error.error.message) {
-                case 'EMAIL_EXISTS':
-                    errorMessage = 'This email exists already';
-            }
+  signup(email: string, password: string) {
+    // replace [API_KEY] (including the []) with authenticatoin key from the Firebase DB Authentication
+    return this.http
+      .post<AuthResponseData>("https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=[API_KEY]", {
+        email: email,
+        password: password,
+        returnSecureToken: true,
+      })
+      .pipe(
+        catchError((errorRes) => {
+          let errorMessage = "An unknown error occurred!";
+          if (!errorRes.error || !errorRes.error.error) {
             return throwError(errorMessage);
-        }));
-    }
+          }
+          switch (errorRes.error.error.message) {
+            case "EMAIL_EXISTS":
+              errorMessage = "This email exists already";
+          }
+          return throwError(errorMessage);
+        })
+      );
+  }
 }
 ```
 
 auth.component.ts
-``` typescript
-import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
 
-import { AuthService } from './auth.service';
+```typescript
+import { Component, OnInit } from "@angular/core";
+import { NgForm } from "@angular/forms";
+
+import { AuthService } from "./auth.service";
 
 @Component({
-  selector: 'app-auth',
-  templateUrl: './auth.component.html',
-  styleUrls: ['./auth.component.css']
+  selector: "app-auth",
+  templateUrl: "./auth.component.html",
+  styleUrls: ["./auth.component.css"],
 })
-
 export class AuthComponent implements OnInit {
   isLoginMode = true;
   isLoading = false;
   error: string = null;
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   onSwitchMode() {
     this.isLoginMode = !this.isLoginMode;
   }
 
-    onSubmit(form: NgForm) {
-        if (!form.valid) {
-            return; 
-        }
-        const email = form.value.email;
-        const password = form.value.password;
+  onSubmit(form: NgForm) {
+    if (!form.valid) {
+      return;
+    }
+    const email = form.value.email;
+    const password = form.value.password;
 
-        this.isLoading = true;
-        if (this.isLoginMode) {
-            // ...
-        } else {
-            this.authService.signup(email, password).subscribe(response => {
-                console.log(response);
-                this.isLoading = false;
-            }, errorMessage => {
-                console.log(errorMessage);
-                this.error = errorMessage;
-                this.isLoading = false;
-            });
+    this.isLoading = true;
+    if (this.isLoginMode) {
+      // ...
+    } else {
+      this.authService.signup(email, password).subscribe(
+        (response) => {
+          console.log(response);
+          this.isLoading = false;
+        },
+        (errorMessage) => {
+          console.log(errorMessage);
+          this.error = errorMessage;
+          this.isLoading = false;
         }
-                
-        form.reset();
+      );
     }
 
+    form.reset();
+  }
 }
 ```
 
 ## Sending Login Requests
 
 ### Login Method
+
 The login method takes an email and a password as parameters. It sends a POST request to the Firebase Authentication API.
 
 Replace [API_KEY] (including the brackets) with your authentication key from the Firebase DB Authentication.
 
 auth.service.ts
-``` typescript
+
+```typescript
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { catchError } from "rxjs/operators";
+import { throwError } from "rxjs";
+
+interface AuthResponseData {
+  kind: string;
+  idToken: string;
+  email: string;
+  refreshToken: string;
+  expiresIn: string;
+  localId: string;
+  registered?: boolean;
+}
+
+@Injectable({
+  providedIn: "root",
+})
+export class AuthService {
+  constructor(private http: HttpClient) {}
+
+  signup(email: string, password: string) {
+    // replace [API_KEY] (including the []) with authenticatoin key from the Firebase DB Authentication
+    return this.http
+      .post<AuthResponseData>("https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=[API_KEY]", {
+        email: email,
+        password: password,
+        returnSecureToken: true,
+      })
+      .pipe(
+        catchError((errorRes) => {
+          let errorMessage = "An unknown error occurred!";
+          if (!errorRes.error || !errorRes.error.error) {
+            return throwError(errorMessage); // In case of an unknown error, it returns the default error message.
+          }
+          switch (
+            errorRes.error.error.message // In case of an 'EMAIL_EXISTS' error, it updates the error message accordingly.
+          ) {
+            case "EMAIL_EXISTS":
+              errorMessage = "This email exists already";
+          }
+          return throwError(errorMessage);
+        })
+      );
+  }
+
+  login(email: string, password: string) {
+    // replace [API_KEY] (including the []) with authenticatoin key from the Firebase DB Authentication
+    return this.http
+      .post<AuthResponseData>("https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=[API_KEY]", {
+        email: email,
+        password: password,
+        returnSecureToken: true,
+      })
+      .subscribe((response) => {
+        console.log(response);
+      });
+  }
+}
+```
+
+auth.component.ts
+
+```typescript
+import { Component, OnInit } from "@angular/core";
+import { NgForm } from "@angular/forms";
+
+import { Observable } from "rxjs";
+
+import { AuthService, AuthResponseData } from "./auth.service"; // import the exported interface from the auth.service.ts file
+
+@Component({
+  selector: "app-auth",
+  templateUrl: "./auth.component.html",
+  styleUrls: ["./auth.component.css"],
+})
+export class AuthComponent implements OnInit {
+  isLoginMode = true;
+  isLoading = false;
+  error: string = null;
+
+  constructor(private authService: AuthService) {}
+
+  ngOnInit(): void {}
+
+  onSwitchMode() {
+    this.isLoginMode = !this.isLoginMode;
+  }
+
+  onSubmit(form: NgForm) {
+    if (!form.valid) {
+      return;
+    }
+    const email = form.value.email;
+    const password = form.value.password;
+
+    let authObs: Observable<AuthResponseData>; // Create a variable to store the observable from the signup or login method
+
+    this.isLoading = true;
+    if (this.isLoginMode) {
+      authObs = this.authService.login(email, password);
+    } else {
+      authObs = this.authService.signup(email, password);
+    }
+
+    authObs.subscribe(
+      (response) => {
+        console.log(response);
+        this.isLoading = false;
+      },
+      (errorMessage) => {
+        console.log(errorMessage);
+        this.error = errorMessage;
+        this.isLoading = false;
+      }
+    ); // Much cleaner
+
+    form.reset();
+  }
+}
+```
+
+**auth.service.ts**
+
+We must also add export to the interface in the auth.service.ts file to be able to use it in the auth.component.ts file above.
+
+```typescript
+export interface AuthResponseData {
+  kind: string;
+  idToken: string;
+  email: string;
+  refreshToken: string;
+  expiresIn: string;
+  localId: string;
+  registered?: boolean;
+}
+```
+
+## Login Error Handling
+
+auth.service.ts
+
+```typescript
+import { Injectable } from "@angular/core";
+import { HttpClient, HttpErrorResponse } from "@angular/common/http"; // Import HttpErrorResponse from @angular/common/http
+
+import { catchError } from "rxjs/operators";
+import { throwError } from "rxjs";
+
+interface AuthResponseData {
+  kind: string;
+  idToken: string;
+  email: string;
+  refreshToken: string;
+  expiresIn: string;
+  localId: string;
+  registered?: boolean;
+}
+
+@Injectable({
+  providedIn: "root",
+})
+export class AuthService {
+  constructor(private http: HttpClient) {}
+
+  signup(email: string, password: string) {
+    return this.http
+      .post<AuthResponseData>("https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=[API_KEY]", {
+        email: email,
+        password: password,
+        returnSecureToken: true,
+      })
+      .pipe(catchError(this.handleError)); // Useing the handleError method to handle errors, keeps it clean.
+  }
+
+  login(email: string, password: string) {
+    return this.http
+      .post<AuthResponseData>("https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=[API_KEY]", {
+        email: email,
+        password: password,
+        returnSecureToken: true,
+      })
+      .pipe(catchError(this.handleError)); // Useing the handleError method to handle errors, keeps it clean.
+  }
+
+  private handleError(errorRes: HttpErrorResponse) {
+    let errorMessage = "An unknown error occurred!";
+    if (!errorRes.error || !errorRes.error.error) {
+      return throwError(errorMessage);
+    }
+    switch (
+      errorRes.error.error.message // Now we will be able to add additional error handling in the future alot easier.
+    ) {
+      case "EMAIL_EXISTS":
+        errorMessage = "This email exists already";
+      case "EMAIL_NOT_FOUND":
+        errorMessage = "This email does not exist.";
+      case "INVALID_PASSWORD":
+        errorMessage = "This password is not correct.";
+    }
+    return throwError(errorMessage);
+  }
+}
+```
+
+## Creating & Storing the User Data
+
+user.model.ts
+
+```typescript
+export class User {
+  constructor(public email: string, public id: string, private _token: string, private _tokenExpirationDate: Date) {}
+
+  get token() {
+    // A getter is a method that is executed when a property is accessed, automatically validates the token. This is a getter, not a setter, so the user can't set the token from outside.
+    if (!this._tokenExpirationDate || new Date() > this._tokenExpirationDate) {
+      // if the token is expired or there is no token, return null.
+      return null;
+    }
+    return this._token;
+  }
+}
+```
+
+auth.service.ts
+
+```typescript
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 
@@ -520,50 +757,86 @@ interface AuthResponseData {
 })
 
 export class AuthService {
+    user = new Subject<User>(); // Create a new Subject, which is an Observable, to be able to emit the user data to other components.
 
     constructor(private http: HttpClient) { }
 
     signup(email: string, password: string) {
-        // replace [API_KEY] (including the []) with authenticatoin key from the Firebase DB Authentication
         return this.http.post<AuthResponseData>(
             'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=[API_KEY]', {
             email: email,
             password: password,
             returnSecureToken: true
-        }).pipe(catchError(errorRes => {
-            let errorMessage = 'An unknown error occurred!';
-            if (!errorRes.error || !errorRes.error.error) {
-                return throwError(errorMessage); // In case of an unknown error, it returns the default error message.
-            }
-            switch (errorRes.error.error.message) { // In case of an 'EMAIL_EXISTS' error, it updates the error message accordingly.
-                case 'EMAIL_EXISTS':
-                    errorMessage = 'This email exists already';
-            }
-            return throwError(errorMessage);
-        }));
+        })
+        .pipe(
+            catchError(this.handleError),
+            tap(resData => { // tap allows us to execute some code without changing the response data.
+                this.handleAuthentication(
+                    resData.email,
+                    resData.localId,
+                    resData.idToken,
+                    +resData.expiresIn
+                    );
+            })
+        });
     }
 
     login(email: string, password: string) {
-        // replace [API_KEY] (including the []) with authenticatoin key from the Firebase DB Authentication
         return this.http.post<AuthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=[API_KEY]', {
             email: email,
             password: password,
             returnSecureToken: true
-        }).subscribe(response => {
-            console.log(response);
-        });
+        })
+        .pipe(catchError(this.handleError));
     }
-}
+
+    private handleAuthentication(
+        email: string,
+        userId: string,
+        token: string,
+        expiresIn: number) {
+
+        const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
+
+        const user = new User(
+            email,
+            userId,
+            token,
+            expirationDate
+            );
+        this.user.next(user);
+    };
+
+    private handleError(errorRes: HttpErrorResponse) {
+        let errorMessage = 'An unknown error occurred!';
+        if (!errorRes.error || !errorRes.error.error) {
+            return throwError(errorMessage);
+        }
+        switch (errorRes.error.error.message) {
+            case 'EMAIL_EXISTS':
+                errorMessage = 'This email exists already';
+            case 'EMAIL_NOT_FOUND':
+                errorMessage = 'This email does not exist.';
+            case 'INVALID_PASSWORD':
+                errorMessage = 'This password is not correct.';
+        }
+        return throwError(errorMessage);
+    }
+
 ```
 
+## Reflecting the Auth State in the UI
+
 auth.component.ts
-``` typescript
+
+```typescript
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router'; // import Router from @angular/router
 
 import { Observable } from 'rxjs';
 
-import { AuthService, AuthResponseData } from './auth.service'; // import the exported interface from the auth.service.ts file
+import { AuthService, AuthResponseData } from './auth.service';
 
 @Component({
   selector: 'app-auth',
@@ -576,7 +849,7 @@ export class AuthComponent implements OnInit {
   isLoading = false;
   error: string = null;
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private router: Router) { } // inject Router
 
     ngOnInit(): void {
     }
@@ -587,12 +860,12 @@ export class AuthComponent implements OnInit {
 
     onSubmit(form: NgForm) {
         if (!form.valid) {
-            return; 
+            return;
         }
         const email = form.value.email;
         const password = form.value.password;
 
-        let authObs: Observable<AuthResponseData>; // Create a variable to store the observable from the signup or login method
+        let authObs: Observable<AuthResponseData>;
 
         this.isLoading = true;
         if (this.isLoginMode) {
@@ -600,46 +873,30 @@ export class AuthComponent implements OnInit {
         } else {
             authObs = this.authService.signup(email, password)
         }
-        
+
         authObs.subscribe(response => {
             console.log(response);
             this.isLoading = false;
+            this.router.navigate(['/recipes']); // navigate to the recipes page after login
         }, errorMessage => {
             console.log(errorMessage);
             this.error = errorMessage;
             this.isLoading = false;
-        }); // Much cleaner
 
         form.reset();
     }
 
+    }
 }
 ```
 
-**auth.service.ts**
-
-We must also add export to the interface in the auth.service.ts file to be able to use it in the auth.component.ts file above.
-
-``` typescript
-
-export interface AuthResponseData {
-    kind: string;
-    idToken: string;
-    email: string;
-    refreshToken: string;
-    expiresIn: string;
-    localId: string;
-    registered?: boolean;
-}
-
-```
-
-## Login Error Handling
+disable the Authenticate(login) after user has provided credentials using propertin binding \*ngIF
 
 auth.service.ts
-``` typescript
+
+```typescript
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http'; // Import HttpErrorResponse from @angular/common/http
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
@@ -659,6 +916,7 @@ interface AuthResponseData {
 })
 
 export class AuthService {
+    user = new Subject<User>();
 
     constructor(private http: HttpClient) { }
 
@@ -669,7 +927,17 @@ export class AuthService {
             password: password,
             returnSecureToken: true
         })
-        .pipe(catchError(this.handleError)); // Useing the handleError method to handle errors, keeps it clean.
+        .pipe(
+            catchError(this.handleError),
+            tap(resData => {
+                this.handleAuthentication(
+                    resData.email,
+                    resData.localId,
+                    resData.idToken,
+                    +resData.expiresIn
+                    );
+            })
+        });
     }
 
     login(email: string, password: string) {
@@ -678,15 +946,32 @@ export class AuthService {
             password: password,
             returnSecureToken: true
         })
-        .pipe(catchError(this.handleError)); // Useing the handleError method to handle errors, keeps it clean.
+        .pipe(catchError(this.handleError));
     }
+
+    private handleAuthentication(
+        email: string,
+        userId: string,
+        token: string,
+        expiresIn: number) {
+
+        const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
+
+        const user = new User(
+            email,
+            userId,
+            token,
+            expirationDate
+            );
+        this.user.next(user);
+    };
 
     private handleError(errorRes: HttpErrorResponse) {
         let errorMessage = 'An unknown error occurred!';
         if (!errorRes.error || !errorRes.error.error) {
-            return throwError(errorMessage); 
+            return throwError(errorMessage);
         }
-        switch (errorRes.error.error.message) { // Now we will be able to add additional error handling in the future alot easier.
+        switch (errorRes.error.error.message) {
             case 'EMAIL_EXISTS':
                 errorMessage = 'This email exists already';
             case 'EMAIL_NOT_FOUND':
@@ -696,26 +981,430 @@ export class AuthService {
         }
         return throwError(errorMessage);
     }
+
+```
+
+Now we must alter the header component to reflect the login success and change the options there.
+
+header.component.ts
+
+```typescript
+import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Subscription } from "rxjs";
+
+import { DataStorageService } from "../shared/data-storage.service";
+import { AuthService } from "../auth/auth.service";
+
+@Component({
+  selector: "app-header",
+  templateUrl: "./header.component.html",
+  styleUrls: ["./header.component.css"],
+})
+export class HeaderComponent implements OnInit, OnDestroy {
+  private userSub: Subscription;
+  isAuthenticated = false;
+
+  constructor(private dataStorageService: DataStorageService, private authService: AuthService) {}
+
+  ngOnInit() {
+    this.authService.user.subscribe((user) => {
+      this.isAuthenticated = !!user; // !! converts the user object to a boolean, if there is a user, it will be true, if not, it will be false.
+    });
+  }
+
+  onSaveData() {
+    this.dataStorageService.storeRecipes();
+  }
+
+  onFetchData() {
+    this.dataStorageService.fetchRecipes().subscribe();
+  }
+
+  onLogout() {
+    this.authService.logout();
+  }
+
+  ngOnDestroy() {
+    this.userSub.unsubscribe();
+  }
 }
 ```
 
-## Creating & Storing the User Data
+ngIfs will now be used in the HTML to show the correct options using the isAuthenticated property.
 
-user.model.ts
-``` typescript
-export class User {
-    constructor(
-        public email: string,
-        public id: string,
-        private _token: string,
-        private _tokenExpirationDate: Date
-    ) {}
+## Adding the Token to Outgoing Requests
 
-    get token() { // A getting is a method that is executed when a property is accessed, automatically validates the token.
-        if (!this._tokenExpirationDate || new Date() > this._tokenExpirationDate) {
-            return null;
-        }
-        return this._token;
-    }
+auth.service.ts
+
+```typescript
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+
+import { catchError } from 'rxjs/operators';
+import { throwError, BehaviorSubject } from 'rxjs'; // import BehaviorSubject from rxjs
+
+interface AuthResponseData {
+    kind: string;
+    idToken: string;
+    email: string;
+    refreshToken: string;
+    expiresIn: string;
+    localId: string;
+    registered?: boolean;
 }
+
+@Injectable({
+  providedIn: 'root'
+})
+
+export class AuthService {
+    user = new BehaviorSubject<User>(null); // Change Subject to BehaviorSubject, which allows us to access the previously emitted value, even if we didn't subscribe at the point of time when it was emitted.
+
+    constructor(private http: HttpClient) { }
+
+    signup(email: string, password: string) {
+        return this.http.post<AuthResponseData>(
+            'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=[API_KEY]', {
+            email: email,
+            password: password,
+            returnSecureToken: true
+        })
+        .pipe(
+            catchError(this.handleError),
+            tap(resData => {
+                this.handleAuthentication(
+                    resData.email,
+                    resData.localId,
+                    resData.idToken,
+                    +resData.expiresIn
+                    );
+            })
+        });
+    }
+
+    login(email: string, password: string) {
+        return this.http.post<AuthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=[API_KEY]', {
+            email: email,
+            password: password,
+            returnSecureToken: true
+        })
+        .pipe(catchError(this.handleError));
+    }
+
+    private handleAuthentication(
+        email: string,
+        userId: string,
+        token: string,
+        expiresIn: number) {
+
+        const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
+
+        const user = new User(
+            email,
+            userId,
+            token,
+            expirationDate
+            );
+        this.user.next(user);
+    };
+
+    private handleError(errorRes: HttpErrorResponse) {
+        let errorMessage = 'An unknown error occurred!';
+        if (!errorRes.error || !errorRes.error.error) {
+            return throwError(errorMessage);
+        }
+        switch (errorRes.error.error.message) {
+            case 'EMAIL_EXISTS':
+                errorMessage = 'This email exists already';
+            case 'EMAIL_NOT_FOUND':
+                errorMessage = 'This email does not exist.';
+            case 'INVALID_PASSWORD':
+                errorMessage = 'This password is not correct.';
+        }
+        return throwError(errorMessage);
+    }
+
+```
+
+data-storage.service.ts
+
+```typescript
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { map, exhaustMap, tap, take } from 'rxjs/operators';
+
+import { RecipeService } from '../recipes/recipe.service';
+import { Recipe } from '../recipes/recipe.model';
+import { AuthService } from '../auth/auth.service';
+
+@Injectable({ providedIn: 'root' })
+
+export class DataStorageService {
+    constructor(
+        private http: HttpClient,
+        private recipeService: RecipeService,
+        private authService: AuthService
+        ) {}
+
+    storeRecipes() {
+        const recipes = this.recipeService.getRecipes();
+        this.http
+            .put(
+                'https://ng-course-recipe-book-8f3a0.firebaseio.com/recipes.json',
+                recipes
+            ).subscribe(response => {
+                console.log(response);
+            });
+    }
+
+    fetchRecipes() {
+        return this.authService.user.pipe(
+            take(1),
+            exhaustMap(user => {
+                return this.http.get<Recipe[]>(
+            'https://ng-course-recipe-book-8f3a0.firebaseio.com/recipes.json',
+                {
+                    params: new HttpParams().set('auth', user.token) // Add the token to the outgoing request.
+                }
+            )};
+            );
+        )},
+        map(recipes => {
+            return recipes.map(recipe => {
+                return {
+                    ...recipe,
+                    ingredients: recipe.ingredients ? recipe.ingredients : []
+                };
+            });
+        }),
+        tap(recipes => {
+            this.recipeService.setRecipes(recipes);
+        })
+        ;
+        };
+        // take(1) allows us to take the latest user and then unsubscribe, so we don't have to unsubscribe manually.
+        // exhaustMap waits for the first observable to complete, then replaces it with the second observable.
+        // exhaustMap allows us to return an observable in the first observable, which is the user observable.
+        // This allows us to use the user token in the second observable, which is the http observable.
+        // This is a way to chain observables.
+```
+
+## Attaching the Token with an Interceptor
+
+auth-interceptor.service.ts
+
+```typescript
+import { Injectable } from "@angular/core";
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpParams } from "@angular/common/http";
+
+import { AuthService } from "./auth.service";
+
+import { take, exhaustMap } from "rxjs/operators";
+
+@Injectable()
+export class AuthInterceptorService implements HttpInterceptor {
+  constructor(private authService: AuthService) {}
+
+  intercept(req: HttpRequest<any>, next: HttpHandler) {
+    return this.authService.user.pipe(
+      take(1),
+      exhaustMap((user) => {
+        if (!user) {
+          return next.handle(req);
+        }
+        const modifiedReq = req.clone({
+          params: new HttpParams().set("auth", user.token),
+        });
+        return next.handle(modifiedReq);
+      })
+    );
+  }
+}
+```
+
+data-storage.service.ts
+
+```typescript
+//...
+
+    fetchRecipes() {
+        return this.http
+            .get<Recipe[]>(
+            'https://ng-course-recipe-book-8f3a0.firebaseio.com/recipes.json',
+            {
+                params: new HttpParams().set('auth', user.token) // Add the token to the outgoing request.
+            }
+        )
+        .pipe(
+            map(recipes => {
+                return recipes.map(recipe => {
+                    return {
+                        ...recipe,
+                        ingredients: recipe.ingredients ? recipe.ingredients : []
+                    };
+                });
+            }),
+            tap(recipes => {
+                this.recipeService.setRecipes(recipes);
+            }));
+    };
+
+//...
+```
+
+app.module.ts
+
+```typescript
+import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
+import { AuthInterceptorService } from './auth/auth-interceptor.service';
+
+import { AuthComponent } from './auth/auth.component';
+import { AppRoutingModule } from './app-routing.module';
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+
+import { AppComponent } from './app.component';
+import { HeaderComponent } from './header/header.component';
+
+import { RecipesComponent } from './recipes/recipes.component';
+import { RecipeListComponent } from './recipes/recipe-list/recipe-list.component';
+import { RecipeDetailComponent } from './recipes/recipe-detail/recipe-detail.component';
+import { RecipeStartComponent } from './recipes/recipe-start/recipe-start.component';
+import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
+import { RecipeItemComponent } from './recipes/recipe-list/recipe-item/recipe-item.component';
+
+import { ShoppingListComponent } from './shopping-list/shopping-list.component';
+import { ShoppingListService } from './shopping-list/shopping-list.service';
+import { ShoppingEditComponent } from './shopping-list/shopping-edit/shopping-edit.component';
+
+import { DropdownDirective } from './shared/dropdown.directive';
+import { RecipeService } from './recipes/recipe.service';
+
+
+@NgModule({
+  declarations: [
+    //...
+    AppComponent,
+    AuthComponent,
+    LoadingSpinnerComponent
+    //...
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    ReactiveFormsModule,
+    FormsModule,
+    HttpClientModule
+  ],
+  providers: [ShoppingListService,
+  RecipeService,
+  {
+    provide: HTTP_INTERCEPTORS, // Add the interceptor to the providers array.
+    useClass: AuthInterceptorService,
+    multi: true
+    }],
+  bootstrap: [AppComponent]
+})
+```
+
+## Adding Logout
+
+auth.service.ts
+
+```typescript
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router'; // import Router from @angular/router
+
+import { catchError } from 'rxjs/operators';
+import { throwError, BehaviorSubject } from 'rxjs'; // import BehaviorSubject from rxjs
+
+interface AuthResponseData {
+    kind: string;
+    idToken: string;
+    email: string;
+    refreshToken: string;
+    expiresIn: string;
+    localId: string;
+    registered?: boolean;
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+
+export class AuthService {
+    user = new BehaviorSubject<User>(null); // Change Subject to BehaviorSubject, which allows us to access the previously emitted value, even if we didn't subscribe at the point of time when it was emitted.
+
+    constructor(private http: HttpClient, private router: Router) { }
+
+    signup(email: string, password: string) {
+        return this.http.post<AuthResponseData>(
+            'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=[API_KEY]', {
+            email: email,
+            password: password,
+            returnSecureToken: true
+        })
+        .pipe(
+            catchError(this.handleError),
+            tap(resData => {
+                this.handleAuthentication(
+                    resData.email,
+                    resData.localId,
+                    resData.idToken,
+                    +resData.expiresIn
+                    );
+            })
+        });
+    }
+
+    login(email: string, password: string) {
+        return this.http.post<AuthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=[API_KEY]', {
+            email: email,
+            password: password,
+            returnSecureToken: true
+        })
+        .pipe(catchError(this.handleError));
+    }
+
+    logout() {
+        this.user.next(null);
+        this.router.navigate(['/auth']);
+    }
+
+    private handleAuthentication(
+        email: string,
+        userId: string,
+        token: string,
+        expiresIn: number) {
+
+        const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
+
+        const user = new User(
+            email,
+            userId,
+            token,
+            expirationDate
+            );
+        this.user.next(user);
+    };
+
+    private handleError(errorRes: HttpErrorResponse) {
+        let errorMessage = 'An unknown error occurred!';
+        if (!errorRes.error || !errorRes.error.error) {
+            return throwError(errorMessage);
+        }
+        switch (errorRes.error.error.message) {
+            case 'EMAIL_EXISTS':
+                errorMessage = 'This email exists already';
+            case 'EMAIL_NOT_FOUND':
+                errorMessage = 'This email does not exist.';
+            case 'INVALID_PASSWORD':
+                errorMessage = 'This password is not correct.';
+        }
+        return throwError(errorMessage);
+    }
+
 ```
